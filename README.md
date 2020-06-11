@@ -63,6 +63,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 * Social profile icon on dashboard
 
 ## Future Features Currently Working On
+* [InstaFlix Trello Agile Board](https://trello.com/b/SEMkB36D/instaflix-project)
 * Watch trailers
 * Allow adding friends 
 * Show movies your friends both liked. To watch together.
