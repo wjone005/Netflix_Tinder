@@ -56,6 +56,9 @@ Once the Flask app is running, navigate to the `localhost` link provided:
 
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com\InstaFlix\LICENSE) file for details.
 
+## Agile Board
+* [InstaFlix Trello Agile Board](https://trello.com/b/SEMkB36D/instaflix-project)
+
 ## Features Added
 * Google Authentication
 * Facebook Authentication
@@ -63,7 +66,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 * Social profile icon on dashboard
 
 ## Future Features Currently Working On
-* [InstaFlix Trello Agile Board](https://trello.com/b/SEMkB36D/instaflix-project)
 * Watch trailers
 * Allow adding friends 
 * Show movies your friends both liked. To watch together.
