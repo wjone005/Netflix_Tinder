@@ -25,16 +25,15 @@
               <a class="nav-link" href="/logout">Logout</a>
             </li>
           </ul>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/account"><img class="profile-img" style="width: 30px; height: 30px;" src="{{profile_pic}}"></a>
+            </li>
+          </ul>
         </div>
-        <ul class="navbar-nav ml-md-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-item nav-link  mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Account
-            </a>
-          </li>
-        </ul>
       </nav>
 
+      
     </header>
     {% block content %}
     {% endblock %}

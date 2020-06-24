@@ -15,9 +15,6 @@
         <div class="container master">
 
         <div class="movie-card">
-            <div><p style="float: left;"><img class="profile-img" style="width: 30px; height: 30px;" src="{{profile_pic}}">{{name}}</p></div>
-            <br>
-            <br>
             <img src={{movie.image}} alt="movie">
             <div class="text">
             <h4 style="text-align: center;"><b>{{movie.title}}</b></h4>
@@ -30,21 +27,30 @@
             <p>{{movie.description}}</p>
             </div>
         </div>
-
         <div class="container">
+            <div><span>40 Likes</span></div>
+            <br>
         <div>
-            <a style=" color: Tomato" href="{{ url_for('dashboard') }}">
-            <i class="far fa-thumbs-down fa-3x"></i>
+            <a style=" color: black" href="{{ url_for('dashboard') }}">
+            <i class="fas fa-times fa-3x"></i>
             </a>
         </div>
         <div>
-            <button type="button" class="btn btn-dark" onclick="window.open('https://www.netflix.com/watch/{{movie.id}}', '_blank')"target='0'>
+            <button type="button" class="btn btn-secondary" onclick="window.open('https://www.netflix.com/watch/{{movie.id}}', '_blank')"target='0'>
             Watch Now!
             </button>
         </div>
         <div>
-            <a style="color: #32AC71;"href="{{ url_for('dashboard') }}">
-            <i class="far fa-thumbs-up fa-3x"></i>
+            <a>Or</a>
+        </div>
+        <div>
+            <button type="button" class="btn btn-secondary" onclick="window.open('https://www.netflix.com/watch/{{movie.id}}', '_blank')"target='0'>
+            Watch Trailer
+            </button>
+        </div>
+        <div>
+            <a style="color: red;"href="{{ url_for('dashboard') }}">
+            <i class="fas fa-heart fa-3x"></i>
             </a>
         </div>
         

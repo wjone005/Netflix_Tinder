@@ -1,0 +1,21 @@
+.container {
+    padding-top: 20px;
+    position: relative;
+  }
+
+.profile-img { 
+    border-radius: 50%;
+}
+
+.header {
+    
+}
+
+.header-title {
+
+}
+
+.solid-line {
+    border-bottom: 1px solid #8e8e8e;
+    margin: 30px;
+  }

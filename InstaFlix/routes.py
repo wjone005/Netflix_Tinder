@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_required, login_user, logout_user
 
 # Import data from models.py file
-from InstaFlix.models import User
+from InstaFlix.models import User, Movies
 
 import requests
 import json
@@ -234,7 +234,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@application.route("/dashboard")
+@application.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     profile_pic = current_user.profile_pic
     name = current_user.name
@@ -273,5 +273,16 @@ def dashboard():
         movie['image'] = movie_data['Poster']
     if 'imdbRating' in movie_data:
         movie['imdb'] = movie_data['imdbRating']
-    # send all this data to the home.html template
+
+    user_favorites = current_user
+    print(movie['title'])
+
+    
     return render_template("dashboard.html", movie=movie, profile_pic = current_user.profile_pic, name = current_user.name)
+
+@application.route("/account")
+def application():
+    profile_pic = current_user.profile_pic
+    name = current_user.name
+    email = current_user.email
+    return render_template("account.html", profile_pic = current_user.profile_pic, name = current_user.name, email=email)
