@@ -2,7 +2,7 @@
 
 A Flask app that generates random movie recommendations, with details listed for each title, that a user can swipe through and watch with the click of a button.
 
-![app demo](/InstaFlix/static/images/website.gif)
+![app demo](https://gfycat.com/jovialhardtofindhornet)
 
 ## Installation
 1. Install Requirements 
