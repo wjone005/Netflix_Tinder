@@ -15,6 +15,7 @@
         <div class="container master">
 
         <div class="movie-card">
+            <!-- <iframe width="260" height="315" src="https://www.youtube.com/embed/{{movie.the_movie_db_video}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
             <img src={{movie.image}} alt="movie">
             <div class="text">
             <h4 style="text-align: center;"><b>{{movie.title}}</b></h4>
@@ -28,7 +29,7 @@
             </div>
         </div>
         <div class="container">
-            <div><span>40 Likes</span></div>
+            <!-- <div><span>40 Likes</span></div> -->
             <br>
         <div>
             <a style=" color: black" href="{{ url_for('dashboard') }}">
@@ -44,7 +45,7 @@
             <a>Or</a>
         </div>
         <div>
-            <button type="button" class="btn btn-secondary" onclick="window.open('https://www.netflix.com/watch/{{movie.id}}', '_blank')"target='0'>
+            <button type="button" class="btn btn-secondary" onclick="window.open('https://www.youtube.com/watch?v={{movie.the_movie_db_video}}', 'popup','width=600,height=600,scrollbars=no,resizable=no')"target='0'>
             Watch Trailer
             </button>
         </div>

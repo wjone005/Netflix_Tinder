@@ -6,6 +6,8 @@ from requests_oauthlib import OAuth2Session
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_required, login_user, logout_user
+from tmdbv3api import TMDb
+from tmdbv3api import Movie
 
 # Import data from models.py file
 from InstaFlix.models import User, Movies
@@ -17,6 +19,13 @@ import random
 
 # API Key
 api_key = environ.get("api_key")
+
+# The Movie DB Key
+tmdb = TMDb()
+tmdb.api_key = environ.get("the_movie_db_key")
+tmdb.language = 'en'
+tmdb.debug = True
+the_movie_db_key = environ.get("the_movie_db_key")
 
 # Facebook Configuration
 FB_CLIENT_ID =  environ.get("FB_CLIENT_ID")
@@ -236,6 +245,7 @@ def logout():
 
 @application.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
+    movies = None
     profile_pic = current_user.profile_pic
     name = current_user.name
     print(profile_pic)
@@ -244,7 +254,7 @@ def dashboard():
         reader = csv.reader(f)
         row = random.choice(list(reader))
 
-    movie = {
+    kaggle_movie = {
         'id': row[0],
         'category': row[1],
         'title': row[2],
@@ -264,21 +274,73 @@ def dashboard():
 
     # fetch cover image
     # call OMDB database
-    url = f"http://www.omdbapi.com/?t={movie['title']}/&apikey={api_key}"
+    omdb_url = f"http://www.omdbapi.com/?t={kaggle_movie['title']}/&apikey={api_key}"
     # get back the response
-    response = requests.request("GET", url)
+    omdb_response = requests.request("GET", omdb_url)
     # parse result into JSON and look for matching data if available
-    movie_data = response.json()
-    if 'Poster' in movie_data:
-        movie['image'] = movie_data['Poster']
-    if 'imdbRating' in movie_data:
-        movie['imdb'] = movie_data['imdbRating']
 
+    the_movie_db_url = f"https://api.themoviedb.org/3/search/movie?api_key={the_movie_db_key}&query={kaggle_movie['title']}"
+    the_movie_db_response = requests.request("GET", the_movie_db_url)
+
+    the_movie_db_data = the_movie_db_response.json()
+    #print(the_movie_db_data)
+    '''if 'total_pages' in the_movie_db_data:
+        kaggle_movie['the_movie_db_total_pages'] = the_movie_db_data['total_pages']
+        #print("SUCCESSFUL ", kaggle_movie['the_movie_db_total_pages'])  
+    '''
+
+    if 'results' in the_movie_db_data:
+        try:
+            kaggle_movie['the_movie_db_results'] = the_movie_db_data["results"][0]["id"]
+            print("Results SUCCESSFUL ", kaggle_movie['the_movie_db_results'])
+        except IndexError:
+            kaggle_movie['the_movie_db_results'] = 'null'
+
+    omdb_movie_data = omdb_response.json()
+    if 'Poster' in omdb_movie_data:
+        kaggle_movie['image'] = omdb_movie_data['Poster']
+    if 'imdbRating' in omdb_movie_data:
+        kaggle_movie['imdb'] = omdb_movie_data['imdbRating']
+    
+    the_movie_db_video_query_url = f"https://api.themoviedb.org/3/movie/{kaggle_movie['the_movie_db_results']}/videos?api_key={the_movie_db_key}"
+    print(the_movie_db_video_query_url)
+    the_movie_db_video_response = requests.request("GET", the_movie_db_video_query_url)
+    
+    the_movie_db_video_data = the_movie_db_video_response.json()
+    #print(the_movie_db_video_data)
+
+    if "results" in the_movie_db_video_data:
+        try:
+            kaggle_movie['the_movie_db_video'] = the_movie_db_video_data["results"][0]["key"]
+            print("Key SUCCESSFUL", kaggle_movie['the_movie_db_video'])
+        except:
+            kaggle_movie['the_movie_db_video'] = 'null'
+    elif "results" in the_movie_db_video_data  < 0:
+        #kaggle_movie['the_movie_db_video'] = 'null'
+        print("Results are False")
+    elif "results" not in the_movie_db_video_data:
+        #kaggle_movie['the_movie_db_video'] = 'null'
+        print("Results not available")
+    #print(the_movie_db_video_data, "TEST SUCCESSFUL")
+
+
+    '''
     user_favorites = current_user
     print(movie['title'])
 
+    if request.form:
+        try:
+            Grab the "movie" input from the form and use it to initilaize
+                a new movie object. We save this new Movie to a variable named 
+                movie.
+            
+            user_movie = Movies(movie_title=request.form.get())
+    '''
+
+
+
     
-    return render_template("dashboard.html", movie=movie, profile_pic = current_user.profile_pic, name = current_user.name)
+    return render_template("dashboard.html", movie=kaggle_movie, profile_pic = current_user.profile_pic, name = current_user.name)
 
 @application.route("/account")
 def application():
